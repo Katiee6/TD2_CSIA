@@ -46,7 +46,7 @@ public class Personne {
     }
 
     public void identifierGroupes() {
-        // calculs
+        // calculs pour récupérer les personnes du ou des groupes d'amis
     }
 
 }
