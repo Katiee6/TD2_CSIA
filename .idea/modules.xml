@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Sociogramme.iml" filepath="$PROJECT_DIR$/Sociogramme.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TD2_CSIA.iml" filepath="$PROJECT_DIR$/.idea/TD2_CSIA.iml" />
     </modules>
   </component>

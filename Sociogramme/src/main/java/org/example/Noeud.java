@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 
-public class Personne {
+public class Noeud {
 
     private ArrayList<String> prenoms = new ArrayList<>();
     private String nom;
@@ -11,7 +11,7 @@ public class Personne {
     private Type type;
     private String classe;
 
-    public Personne(ArrayList<String> prenoms, String nom, int age, Sexe sexe, String classe) {
+    public Noeud(ArrayList<String> prenoms, String nom, int age, Sexe sexe, String classe) {
         this.prenoms = prenoms;
         this.nom = nom;
         this.age = age;

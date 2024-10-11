@@ -2,10 +2,10 @@ package org.example;
 
 public class Relation {
 
-    private Personne a;
-    private Personne b;
+    private Noeud a;
+    private Noeud b;
 
-    public Relation(Personne a, Personne b) {
+    public Relation(Noeud a, Noeud b) {
         this.a = a;
         this.b = b;
 
