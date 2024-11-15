@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Noeud{
 
@@ -49,21 +50,6 @@ public class Noeud{
         if (!amis.contains(ami)) {
             amis.add(ami);
         }
-    }
-
-
-    public void evaluerRelations() {
-        this.deciderType();
-        this.identifierGroupes();
-    }
-
-    public void deciderType() {
-        // calculs
-        //this.type = ;
-    }
-
-    public void identifierGroupes() {
-        // calculs pour récupérer les personnes du ou des groupes d'amis
     }
 
 
@@ -151,6 +137,57 @@ public class Noeud{
         return null;
     }
 
+
+
+
+    // IDENTIFICATION DES ISOLES, MENEURS, CONSEILLERS
+
+    public static void identifierIsoles(List<Noeud> listeNoeuds) {
+        for (Noeud noeud: listeNoeuds) {
+            boolean isole = false;
+            if (noeud.amis.isEmpty()) {
+                for (Noeud autre : listeNoeuds) {
+                    if (autre.amis.contains(noeud)) {
+                        isole = false;
+                        break; // il n'est pas isolé puisqu'il est dans une liste d'amis
+                    }
+                    isole = true;
+                }
+                if(isole) {
+                    noeud.type = Type.ISOLE;
+                }
+            }
+        }
+    }
+
+    public static void identifierMeneurs(List<Noeud> listeNoeuds) {
+        for (Noeud noeud : listeNoeuds) {
+            int countEstAmis = 0;
+            for (Noeud autre : listeNoeuds) {
+                if (autre.amis.contains(noeud)) {
+                    countEstAmis++; // on compte le nombre de personne qui le considèrent comme amis
+                }
+            }
+            // si 60% de la population est ami avec lui
+            if (((double) countEstAmis / listeNoeuds.size()) > 0.6) {
+                // s'il y a plus de personne qui le considèrent comme son ami que l'inverse (au moins 2 fois plus)
+                if (countEstAmis > noeud.amis.size() * 2) {
+                    noeud.type = Type.MENEUR;
+                }
+            }
+        }
+    }
+
+    public static void identifierConseilles(List<Noeud> listeNoeuds) {
+        for (Noeud noeud: listeNoeuds) {
+            if (noeud.type == Type.MENEUR) {
+                // Les amis d'un meneur sont des conseillers
+                for (Noeud amisDuMeneur : noeud.amis) {
+                        amisDuMeneur.type = Type.CONSEILLER;
+                }
+            }
+        }
+    }
 
 
 
