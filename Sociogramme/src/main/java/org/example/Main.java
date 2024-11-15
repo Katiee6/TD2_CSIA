@@ -115,7 +115,7 @@ public class Main {
                     String classe = sc.nextLine();
 
                     Noeud nouveauNoeud = new Noeud(prenomsNouveau, nom, age, sexe, classe);
-                    nouveauNoeud.ajouterNoeud("org.example/noeud.json");
+                    nouveauNoeud.ajouterNoeud("noeud.json");
                     System.out.println("Personne ajoutée avec succès !");
                     break;
 
@@ -123,7 +123,7 @@ public class Main {
                     System.out.println("Suppression d'une personne...");
                     System.out.print("Entrez le nom de la personne à supprimer : ");
                     String nomSupprimer = sc.nextLine();
-                    Noeud.supprimerNoeud("org.example/noeud.json", nomSupprimer);
+                    Noeud.supprimerNoeud("noeud.json", nomSupprimer);
                     System.out.println("Personne supprimée avec succès !");
                     break;
 
@@ -131,7 +131,7 @@ public class Main {
                     System.out.println("Affichage des relations...");
                     // Afficher les relations en parcourant le fichier JSON
                     try {
-                        JSONArray noeuds = Noeud.chargerDonnees("org.example/noeud.json");
+                        JSONArray noeuds = Noeud.chargerDonnees("noeud.json");
                         System.out.println(noeuds.toJSONString());
                     } catch (Exception e) {
                         System.out.println("Erreur lors du chargement des relations.");
