@@ -1,6 +1,6 @@
 package org.example;
 
 public enum Sexe {
-    M,
+    H,
     F
 }
