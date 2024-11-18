@@ -6,11 +6,12 @@ public class Graphe {
 
     private String nom; // nom du graphe
     private String classe; // classe pour laquelle le graphe est fait
+    private Set<Noeud> noeuds;
 
     public Graphe(String nom, String classe) {
         this.nom = nom;
-        recupererNoeudsClasse(classe);
-        // ...
+        this.classe = classe;
+        this.noeuds = recupererNoeudsClasse(classe); // init
         sauvegarderGraphe();
     }
 
