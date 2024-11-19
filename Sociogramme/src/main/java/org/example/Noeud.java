@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Noeud {
-    private static int compteurId = 0;  // Compteur pour les ID uniques
-  //  private int id;  // ID unique pour chaque noeud
     private int id;  // ID unique pour chaque noeud
     private ArrayList<String> prenoms;
     private String nom;
@@ -20,11 +18,10 @@ public class Noeud {
     private Sexe sexe;
     private String classe;
     Type type = Type.ISOLE;
-    private ArrayList<Integer> amis;  // Liste des IDs des amis
+    private ArrayList<Integer> amis;  //liste des IDs des amis
 
-    // Constructeur
     public Noeud(int id, ArrayList<String> prenoms, String nom, int age, Sexe sexe, String classe, ArrayList<Integer> amis) {
-        this.id = id;  // Attribution d'un ID unique
+        this.id = id;
         this.prenoms = prenoms;
         this.nom = nom;
         this.age = age;
@@ -87,19 +84,14 @@ public class Noeud {
 
     public static void supprimerNoeud(String fichier, String nom) {
         try {
-            // Charger les données existantes
             JSONArray noeuds = chargerDonnees(fichier);
             JSONArray noeudsRestants = new JSONArray();
-
-            // Parcourir les nœuds et filtrer ceux à conserver
             for (Object obj : noeuds) {
                 JSONObject noeud = (JSONObject) obj;
                 if (!noeud.get("nom").equals(nom)) {
                     noeudsRestants.add(noeud);
                 }
             }
-
-            // Sauvegarder les données mises à jour
             try (FileWriter file = new FileWriter(fichier)) {
                 file.write(noeudsRestants.toJSONString());
             }
@@ -127,7 +119,7 @@ public class Noeud {
                 return noeud;
             }
         }
-        return null; // Return null if not found
+        return null;
     }
 
 
@@ -251,8 +243,8 @@ public class Noeud {
     public static void genererDot(String fichierJSON, String fichierDOT) {
         try {
             JSONArray noeuds = chargerDonnees(fichierJSON);
-            StringBuilder dotContent = new StringBuilder("graph {\n"); // Utilisation de "graph" pour un graphe non orienté
-            List<String> relations = new ArrayList<>(); // Liste pour éviter les doublons
+            StringBuilder dotContent = new StringBuilder("graph {\n");
+            List<String> relations = new ArrayList<>();
 
             for (Object obj : noeuds) {
                 JSONObject noeud = (JSONObject) obj;
@@ -262,7 +254,7 @@ public class Noeud {
                 for (Object amiObj : amis) {
                     int amiId = ((Long) amiObj).intValue();
 
-                    // Récupérer le nom de l'ami
+                    //récupérer le nom de l'ami
                     JSONObject amiNoeud = null;
                     for (Object potentialFriend : noeuds) {
                         JSONObject potentialNode = (JSONObject) potentialFriend;
@@ -277,7 +269,6 @@ public class Noeud {
                         String relation = nom + " -- " + amiNom;
                         String reverseRelation = amiNom + " -- " + nom;
 
-                        // Ajouter la relation si elle n'existe pas déjà
                         if (!relations.contains(relation) && !relations.contains(reverseRelation)) {
                             relations.add(relation);
                             dotContent.append("  ").append(relation).append(";\n");

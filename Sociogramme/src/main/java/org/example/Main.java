@@ -94,7 +94,7 @@ public class Main {
         n8.ajouterNoeud("noeud.json");
 
 
-        // Menu principal
+        //menu principal
         Scanner sc = new Scanner(System.in);
         System.out.println("\n*** Menu ***");
         while (true) {
