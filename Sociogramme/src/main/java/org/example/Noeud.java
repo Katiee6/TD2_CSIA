@@ -247,12 +247,12 @@ public class Noeud {
         return noeuds;
     }
 
-
-
+//dot -Tpng monfichier.dot -o monfichierdesortie.png
     public static void genererDot(String fichierJSON, String fichierDOT) {
         try {
             JSONArray noeuds = chargerDonnees(fichierJSON);
-            StringBuilder dotContent = new StringBuilder("Graphe {\n");
+            StringBuilder dotContent = new StringBuilder("graph {\n"); // Utilisation de "graph" pour un graphe non orienté
+            List<String> relations = new ArrayList<>(); // Liste pour éviter les doublons
 
             for (Object obj : noeuds) {
                 JSONObject noeud = (JSONObject) obj;
@@ -260,20 +260,42 @@ public class Noeud {
                 JSONArray amis = (JSONArray) noeud.get("amis");
 
                 for (Object amiObj : amis) {
-                    String amiNom = (String) amiObj;
-                    dotContent.append("  ").append(nom).append(" -> ").append(amiNom).append(";\n");
+                    int amiId = ((Long) amiObj).intValue();
+
+                    // Récupérer le nom de l'ami
+                    JSONObject amiNoeud = null;
+                    for (Object potentialFriend : noeuds) {
+                        JSONObject potentialNode = (JSONObject) potentialFriend;
+                        if (((Long) potentialNode.get("id")).intValue() == amiId) {
+                            amiNoeud = potentialNode;
+                            break;
+                        }
+                    }
+
+                    if (amiNoeud != null) {
+                        String amiNom = (String) amiNoeud.get("nom");
+                        String relation = nom + " -- " + amiNom;
+                        String reverseRelation = amiNom + " -- " + nom;
+
+                        // Ajouter la relation si elle n'existe pas déjà
+                        if (!relations.contains(relation) && !relations.contains(reverseRelation)) {
+                            relations.add(relation);
+                            dotContent.append("  ").append(relation).append(";\n");
+                        }
+                    }
                 }
             }
 
             dotContent.append("}\n");
-            FileWriter file = new FileWriter(fichierDOT);
-            file.write(dotContent.toString());
-            file.flush();
-            file.close();
+            try (FileWriter file = new FileWriter(fichierDOT)) {
+                file.write(dotContent.toString());
+            }
+
             System.out.println("Graph DOT généré avec succès.");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erreur lors de la génération du graphe DOT : " + e.getMessage());
         }
     }
+
 
 }

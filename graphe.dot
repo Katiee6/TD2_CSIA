@@ -1,0 +1,7 @@
+graph {
+  Smith -- Williams;
+  Smith -- Brown;
+  Brown -- Johnson;
+  Brown -- Williams;
+  Brown -- Jones;
+}

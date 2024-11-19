@@ -68,22 +68,22 @@ public class Main {
         Noeud n8 = new Noeud(8, prenoms8, "Grant", 24, Sexe.H, "Classe A", amis8);
 
 
-      // Déclaration des amitiés réciproques
+        //déclaration des amitiés réciproques
         amis5.add(n1.getId());  // Amitié réciproque entre n1 et n5
         amis1.add(n5.getId());
         amis2.add(n3.getId());  // Amitié non-réciproque entre n3 et n2
 
-// n4 est isolé, donc pas d'amitié à ajouter
+        // n4 est isolé, donc pas d'amitié à ajouter
 
-// n2 est meneur, ajout des amis
-        amis2.add(n5.getId());  // Amitié avec n5 (réelle)
-        amis1.add(n2.getId());   // Amitié avec n2
+        // n2 est meneur, ajout des amis
+        amis2.add(n5.getId());  // amitié avec n5
+        amis1.add(n2.getId());   //amitié avec n2
 
-// n6 est conseiller, le seul ami du meneur n2
-        amis6.add(n2.getId());  // Amitié réciproque avec n2
-        amis2.add(n6.getId());   // Amitié réciproque avec n6
+        // n6 est conseiller, le seul ami du meneur n2
+        amis6.add(n2.getId());  // amitié réciproque avec n2
+        amis2.add(n6.getId());   // amitié réciproque avec n6
 
-// Ajouter les amitiés au fichier JSON après modifications
+        //ajouter les amitiés au fichier JSON après modifications
         n1.ajouterNoeud("noeud.json");
         n2.ajouterNoeud("noeud.json");
         n3.ajouterNoeud("noeud.json");
@@ -196,20 +196,17 @@ public class Main {
     }
 
     private static void afficherRoles(List<Noeud> listNoeud) throws IOException {
-        List<Noeud> noeuds = loadNoeuds("noeud.json"); // Load the list of Noeuds from your data source (JSON file, etc.)
+        List<Noeud> noeuds = loadNoeuds("noeud.json");
 
-        // Let's assume you already have a list of IDs (ids)
-        List<Integer> ids = new ArrayList<>(); // Example: populate this list with actual IDs
+        List<Integer> ids = new ArrayList<>();
         for(Noeud n : noeuds){
             ids.add(n.getId());
         }
 
-        // Identify roles
-        List<String> isoles = identifierIsoles(ids, noeuds);
-       List<String> meneurs = identifierMeneurs(ids, noeuds);
+        List<String> meneurs = identifierMeneurs(ids, noeuds);
         List<String> conseillers = identifierConseilles(ids, noeuds);
+        List<String> isoles = identifierIsoles(ids, noeuds);
 
-        // Display roles
         System.out.println("\nIsolés : ");
         for (String nom : isoles) {
             System.out.println(" - " + nom);
